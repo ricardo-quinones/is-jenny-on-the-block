@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial;
+        background-color: black;
+        color: white;
+      }
+
+      .main {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .header {
+        margin: 50px 0;
+        text-align: center;
+        font-size: 30px;
+      }
+
+      .answer {
+        position: relative;
+        background-color: grey;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        margin: 0 auto;
+      }
+
+      .answer::after {
+        content: attr(data-answer);
+        font-size: 100px;
+        text-transform: uppercase;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <h1 class="header">IS JENNY ON THE BLOCK?</h1>
+      <div class="answer" data-answer="IDK" />
+    </main>
+  </body>
+</html>
