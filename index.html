@@ -47,17 +47,21 @@
       }
 
       .button {
-        display: block;
         padding: 18px 20px;
         background-color: white;
         margin: 80px auto 0;
         border-radius: 5px;
+        display: none;
+      }
+
+      .button.loaded {
+        display: block;
       }
     </style>
   </head>
   <body>
     <main class="main">
-      <h1 class="header">IS JENNY ON THE BLOCK?</h1>
+      <h1 class="header">IS JENNY ON DA BLOCK?</h1>
       <div class="answer" data-answer="IDK"></div>
 
       <button class="button">Update Jenny's status</button>
@@ -67,7 +71,7 @@
       var buttonEl = document.querySelector('.button');
       var updateAnswer = function(answer) {
         answerEl.setAttribute('data-answer', answer ? 'YAS' : 'IDK');
-        buttonEl.innerText = answer ? 'Not on the block?' : 'She on the block?'
+        buttonEl.innerText = answer ? 'Not on da block?' : 'She on da block?'
       }
       var request = new XMLHttpRequest();
       var isJennyOnTheBlock = false;
@@ -80,6 +84,7 @@
             updateAnswer(isJennyOnTheBlock);
           }
           answerEl.classList.add('loaded');
+          buttonEl.classList.add('loaded');
         } catch (err) {
           console.error(err);
         }
