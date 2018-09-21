@@ -35,13 +35,75 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        opacity: 0;
+      }
+
+      .answer.loaded::after {
+        opacity: 1;
+      }
+
+      [data-answer="YAS"] {
+        background-color: green;
+      }
+
+      .button {
+        display: block;
+        padding: 18px 20px;
+        background-color: white;
+        margin: 80px auto 0;
+        border-radius: 5px;
       }
     </style>
   </head>
   <body>
     <main class="main">
       <h1 class="header">IS JENNY ON THE BLOCK?</h1>
-      <div class="answer" data-answer="YAS" />
+      <div class="answer" data-answer="IDK"></div>
+
+      <button class="button">Update Jenny's status</button>
     </main>
+    <script>
+      var answerEl = document.querySelector('.answer');
+      var buttonEl = document.querySelector('.button');
+      var updateAnswer = function(answer) {
+        answerEl.setAttribute('data-answer', answer ? 'YAS' : 'IDK');
+        buttonEl.innerText = answer ? 'Not on the block?' : 'She on the block?'
+      }
+      var request = new XMLHttpRequest();
+      var isJennyOnTheBlock = false;
+
+      request.onload = function () {
+        try {
+          if (this.status === 200) {
+            var res = JSON.parse(this.response);
+            isJennyOnTheBlock = res.is_jenny_on_the_block.toLowerCase() === 'true'
+            updateAnswer(isJennyOnTheBlock);
+          }
+          answerEl.classList.add('loaded');
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      request.open('GET', 'https://store.zapier.com/api/records?secret=esQKFbhPHVx2Ms6r', true);
+      request.send();
+
+      buttonEl.addEventListener('click', function () {
+        var updateRequest = new XMLHttpRequest();
+        updateRequest.onload = function () {
+          if (this.status === 200) {
+            isJennyOnTheBlock = !isJennyOnTheBlock;
+            updateAnswer(isJennyOnTheBlock);
+          }
+        }
+        updateRequest.open('POST', 'https://hooks.zapier.com/hooks/catch/72028/qjai96/', true);
+        var body = {
+          jenny: {
+            is_on_the_block: !isJennyOnTheBlock,
+          },
+        };
+        updateRequest.send(JSON.stringify(body));
+      });
+    </script>
   </body>
 </html>
