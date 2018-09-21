@@ -61,8 +61,8 @@
   </head>
   <body>
     <main class="main">
-      <h1 class="header">IS JENNY ON DA BLOCK?</h1>
-      <div class="answer" data-answer="IDK"></div>
+      <h1 class="header">IS JENNY ON THE BLOCK?</h1>
+      <div class="answer"></div>
 
       <button class="button">Update Jenny's status</button>
     </main>
@@ -71,7 +71,7 @@
       var buttonEl = document.querySelector('.button');
       var updateAnswer = function(answer) {
         answerEl.setAttribute('data-answer', answer ? 'YAS' : 'IDK');
-        buttonEl.innerText = answer ? 'Not on da block?' : 'She on da block?'
+        buttonEl.innerText = answer ? 'Not on the block?' : 'She on the block?';
       }
       var request = new XMLHttpRequest();
       var isJennyOnTheBlock = false;
